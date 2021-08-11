@@ -10,31 +10,51 @@ class Fetch_pool:
   """Fetch pool Object that contains a queue of fetch ready for work
 
   This class is mainly used for load balancing and task scheduling. 
-  Since a gRPC connection need
-  to be remain connected this object will hold the connection until it is getting 
-  destructed
+  User can get a fetch from the pool object and send it a Checkout or
+  Checkin task then return the fetch to the pool (Since Checkout/Checkin
+  for fetch is non-blocking you should return fetch right after sending
+  the command)
 
   Typical usage example:
 
-  myfetch = Fetch()
-  myfetch2 = Fetch('localhost:50051')
-  myfetch.CheckOut()
+  myfetch_pool = Fetch_pool(2, ['localhost:50051', 'localhost:50052'])
+
+  fetch = myfetch_pool.get_fetch()
+  fetch.CheckOut()
+  myfetch_pool.return_fetch(fetch)
+
+  fetch = myfetch_pool.get_fetch()
+  fetch.CheckOut()
+  myfetch_pool.return_fetch(fetch)
   """
   def __init__(self, n = 1, addresses = ['localhost:50051']) -> None:
+    """
+      Initialize the fetch pool object, based on the number and addresses provided
+    """
     self.q_ = queue.Queue()
     for i in range(n):
       self.q_.put(Fetch(address=addresses[i]))
 
   def get_fetch(self):
+    """
+      Get a fetch. If not already in use then set it's inuse state to true
+    """
     fetch = self.q_.get()
     # We might need lock here the concurrency is relatively low 
     # so mutex won't have a big performance hit
-    fetch.inuse_lock_.acquire()
-    fetch.inuse_ = True
-    fetch.inuse_lock_.release()
-    return fetch
+    while True:
+      fetch.inuse_lock_.acquire()
+      if not fetch.inuse_:
+        fetch.inuse_ = True
+        return fetch
+      fetch.inuse_lock_.release()
+      # Give time for other to return fetch to prevent deadlock
+      time.sleep(1)
 
   def return_fetch(self, fetch):
+    """
+      return a fetch. set it's inuse state to False
+    """
     # We might need lock here the concurrency is relatively low 
     # so mutex won't have a big performance hit
     fetch.inuse_lock_.acquire()
