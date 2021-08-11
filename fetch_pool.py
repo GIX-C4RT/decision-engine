@@ -46,6 +46,7 @@ class Fetch_pool:
       fetch.inuse_lock_.acquire()
       if not fetch.inuse_:
         fetch.inuse_ = True
+        fetch.inuse_lock_.release()
         return fetch
       fetch.inuse_lock_.release()
       # Give time for other to return fetch to prevent deadlock
