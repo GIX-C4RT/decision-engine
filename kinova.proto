@@ -1,0 +1,24 @@
+syntax = "proto3";
+// The Kinova service definition.
+service Kinova {
+  rpc CheckOut (CheckOutRequest) returns (CheckOutReply) {}
+  rpc CheckIn (CheckInRequest) returns (CheckInReply) {}
+}
+
+message CheckOutRequest {
+  int32 kit_ID = 1;
+  repeated int32 item_list = 2;
+}
+
+message CheckInRequest {
+  int32 kit_ID = 1;
+  repeated int32 item_list = 2;
+}
+
+message CheckOutReply {
+  bool item_ready = 1;
+}
+
+message CheckInReply {
+  bool item_returned = 1;
+}
