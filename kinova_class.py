@@ -48,7 +48,7 @@ class Kinova:
     """
       Check out instruction that will be send to the fetch
     """
-    self.future_ = self.stub_.CheckOut.future(kinova_pb2.CheckOutRequest(kit_ID = kit_ID, item_list = item_list))
+    self.future_ = self.stub_.Kinova_CheckOut.future(kinova_pb2.Kinova_CheckOutRequest(kit_ID = kit_ID, item_list = item_list))
     if call_back:
       self.future_.add_done_callback(call_back)
 

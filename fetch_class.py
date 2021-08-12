@@ -48,7 +48,7 @@ class Fetch:
     """
       Check out instruction that will be send to the fetch
     """
-    self.future_ = self.stub_.CheckOut.future(fetch_pb2.CheckOutRequest(kit_ID=kit_ID, kit_location=kit_location, target_location=target_location))
+    self.future_ = self.stub_.Fetch_CheckOut.future(fetch_pb2.Fetch_CheckOutRequest(kit_ID=kit_ID, kit_location=kit_location, target_location=target_location))
     if call_back:
       self.future_.add_done_callback(call_back)
 

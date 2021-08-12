@@ -69,13 +69,13 @@ if __name__ == "__main__":
 
   print("first request comes in")
   kinova = mykinova_pool.get_kinova()
-  kinova.CheckOut()
+  kinova.CheckOut(call_back=lambda _: print("Kinova1_done"))
   mykinova_pool.return_kinova(kinova)
 
   time.sleep(4)
   print("second request comes in")
   kinova = mykinova_pool.get_kinova()
-  kinova.CheckOut()
+  kinova.CheckOut(call_back=lambda _: print("Kinova2_done"))
   mykinova_pool.return_kinova(kinova)
 
   while True:

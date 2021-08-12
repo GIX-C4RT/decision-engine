@@ -69,13 +69,13 @@ if __name__ == "__main__":
 
   print("first request comes in")
   fetch = myfetch_pool.get_fetch()
-  fetch.CheckOut()
+  fetch.CheckOut(call_back=lambda _: print("fetch1_done"))
   myfetch_pool.return_fetch(fetch)
 
   time.sleep(4)
   print("second request comes in")
   fetch = myfetch_pool.get_fetch()
-  fetch.CheckOut()
+  fetch.CheckOut(call_back=lambda _: print("fetch2_done"))
   myfetch_pool.return_fetch(fetch)
 
   while True:

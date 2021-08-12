@@ -26,8 +26,7 @@ import random
 
 
 class Greeter(fetch_pb2_grpc.FetchServicer):
-
-    def CheckOut(self, request, context):
+    def Fetch_CheckOut(self, request, context):
         print("Navigating...")
         time.sleep(random.randint(1,3))
         print("Docking...")
@@ -37,7 +36,7 @@ class Greeter(fetch_pb2_grpc.FetchServicer):
         print("Delivering")
         time.sleep(random.randint(4,8))
         print("Done")
-        return fetch_pb2.CheckOutReply(delivered=True)
+        return fetch_pb2.Fetch_CheckOutReply(delivered=True)
 
 
 def serve():

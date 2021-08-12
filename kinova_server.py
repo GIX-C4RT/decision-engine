@@ -27,12 +27,12 @@ import random
 
 class Greeter(kinova_pb2_grpc.KinovaServicer):
 
-    def CheckOut(self, request, context):
+    def Kinova_CheckOut(self, request, context):
         for item in request.item_list:
           print("Grasping item ", item, "...")
           time.sleep(random.randint(1,3))
         print("Done")
-        return kinova_pb2.CheckOutReply(item_ready=True)
+        return kinova_pb2.Kinova_CheckOutReply(item_ready=True)
 
 
 def serve():
