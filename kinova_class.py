@@ -36,23 +36,24 @@ class Kinova:
     print("deleting Kinova at " + self.address_)
     self.channel_.close()
 
-  def operation_complete(self, future):
-    """
-      Call back when the checkout process is done. 
-      Depending on situation it might call Kinova CheckOut function for next step
-    """
-    print("Kinova " + self.address_ + " completes operation")
-    print("Check response value is it delivered? ", future.result().item_ready)
+  # def operation_complete(self, future):
+  #   """
+  #     Call back when the checkout process is done. 
+  #     Depending on situation it might call Kinova CheckOut function for next step
+  #   """
+  #   print("Kinova " + self.address_ + " completes operation")
+  #   print("Check response value is it delivered? ", future.result().item_ready)
 
-  def CheckOut(self, kit_ID = -1, kit_location = -1, target_location = -1):
+  def CheckOut(self, kit_ID = -1, kit_location = -1, target_location = -1, call_back = None):
     """
       Check out instruction that will be send to the fetch
     """
     self.future_ = self.stub_.CheckOut.future(kinova_pb2.CheckOutRequest(kit_ID=kit_ID, kit_location=kit_location, target_location=target_location))
-    self.future_.add_done_callback(self.delivered)
+    if call_back:
+      self.future_.add_done_callback(call_back)
 
 if __name__ == "__main__":
-  myfetch = Fetch()
+  myfetch = Kinova()
   myfetch.CheckOut()
   while True:
     pass
