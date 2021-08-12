@@ -36,7 +36,7 @@ class Fetch:
     print("deleting Fetch at " + self.address_)
     self.channel_.close()
 
-  def delivered(self, future):
+  def CheckOutComplete(self, future):
     """
       Call back when the checkout process is done. 
       Depending on situation it might call Kinova CheckOut function for next step
@@ -49,7 +49,7 @@ class Fetch:
       Check out instruction that will be send to the fetch
     """
     self.future_ = self.stub_.CheckOut.future(fetch_pb2.CheckOutRequest(kit_ID=kit_ID, kit_location=kit_location, target_location=target_location))
-    self.future_.add_done_callback(self.delivered)
+    self.future_.add_done_callback(self.CheckOutComplete)
 
 if __name__ == "__main__":
   myfetch = Fetch()

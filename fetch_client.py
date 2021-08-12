@@ -37,7 +37,7 @@ def run():
     # print(stub.CheckOut(kit_ID=1, kit_location=1, target_location=1))
     print("Sending Fetch for delivering")
     future = stub.CheckOut.future(fetch_pb2.CheckOutRequest(kit_ID=1, kit_location=1, target_location=1))
-    future.add_done_callback(delivered)
+    future.add_done_callback(CheckOutComplete)
     print("Request Send")
     while True:
       print("doing something else")
