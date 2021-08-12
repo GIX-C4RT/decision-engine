@@ -1,26 +1,26 @@
 syntax = "proto3";
 // The Fetch service definition.
 service Fetch {
-  rpc CheckOut (CheckOutRequest) returns (CheckOutReply) {}
-  rpc CheckIn (CheckInRequest) returns (CheckInReply) {}
+  rpc Fetch_CheckOut (Fetch_CheckOutRequest) returns (Fetch_CheckOutReply) {}
+  rpc Fetch_CheckIn (Fetch_CheckInRequest) returns (Fetch_CheckInReply) {}
 }
 
-message CheckOutRequest {
+message Fetch_CheckOutRequest {
   int32 kit_ID = 1;
   int32 kit_location = 2;
   int32 target_location = 3;
 }
 
-message CheckInRequest {
+message Fetch_CheckInRequest {
   int32 kit_ID = 1;
   int32 kit_location = 2;
   int32 target_location = 3;
 }
 
-message CheckOutReply {
+message Fetch_CheckOutReply {
   bool delivered  = 1;
 }
 
-message CheckInReply {
+message Fetch_CheckInReply {
   bool returned = 1;
 }

@@ -38,12 +38,12 @@ class Greeter(kinova_pb2_grpc.KinovaServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     kinova_pb2_grpc.add_KinovaServicer_to_server(Greeter(), server)
-    server.add_insecure_port('localhost:50051')
+    server.add_insecure_port('localhost:50053')
     server.start()
 
     server2 = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     kinova_pb2_grpc.add_KinovaServicer_to_server(Greeter(), server2)
-    server2.add_insecure_port('localhost:50052')
+    server2.add_insecure_port('localhost:50054')
     server2.start()
 
     server.wait_for_termination()

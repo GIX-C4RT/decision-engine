@@ -44,12 +44,13 @@ class Fetch:
     print("Fetch " + self.address_ + " gets back")
     print("Check response value is it delivered? ", future.result().delivered)
 
-  def CheckOut(self, kit_ID = -1, kit_location = -1, target_location = -1):
+  def CheckOut(self, kit_ID = -1, kit_location = -1, target_location = -1, call_back=None):
     """
       Check out instruction that will be send to the fetch
     """
     self.future_ = self.stub_.CheckOut.future(fetch_pb2.CheckOutRequest(kit_ID=kit_ID, kit_location=kit_location, target_location=target_location))
-    self.future_.add_done_callback(self.CheckOutComplete)
+    if call_back:
+      self.future_.add_done_callback(call_back)
 
 if __name__ == "__main__":
   myfetch = Fetch()

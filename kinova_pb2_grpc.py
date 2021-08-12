@@ -15,15 +15,15 @@ class KinovaStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.CheckOut = channel.unary_unary(
-                '/Kinova/CheckOut',
-                request_serializer=kinova__pb2.CheckOutRequest.SerializeToString,
-                response_deserializer=kinova__pb2.CheckOutReply.FromString,
+        self.Kinova_CheckOut = channel.unary_unary(
+                '/Kinova/Kinova_CheckOut',
+                request_serializer=kinova__pb2.Kinova_CheckOutRequest.SerializeToString,
+                response_deserializer=kinova__pb2.Kinova_CheckOutReply.FromString,
                 )
-        self.CheckIn = channel.unary_unary(
-                '/Kinova/CheckIn',
-                request_serializer=kinova__pb2.CheckInRequest.SerializeToString,
-                response_deserializer=kinova__pb2.CheckInReply.FromString,
+        self.Kinova_CheckIn = channel.unary_unary(
+                '/Kinova/Kinova_CheckIn',
+                request_serializer=kinova__pb2.Kinova_CheckInRequest.SerializeToString,
+                response_deserializer=kinova__pb2.Kinova_CheckInReply.FromString,
                 )
 
 
@@ -31,13 +31,13 @@ class KinovaServicer(object):
     """The Kinova service definition.
     """
 
-    def CheckOut(self, request, context):
+    def Kinova_CheckOut(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def CheckIn(self, request, context):
+    def Kinova_CheckIn(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -46,15 +46,15 @@ class KinovaServicer(object):
 
 def add_KinovaServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'CheckOut': grpc.unary_unary_rpc_method_handler(
-                    servicer.CheckOut,
-                    request_deserializer=kinova__pb2.CheckOutRequest.FromString,
-                    response_serializer=kinova__pb2.CheckOutReply.SerializeToString,
+            'Kinova_CheckOut': grpc.unary_unary_rpc_method_handler(
+                    servicer.Kinova_CheckOut,
+                    request_deserializer=kinova__pb2.Kinova_CheckOutRequest.FromString,
+                    response_serializer=kinova__pb2.Kinova_CheckOutReply.SerializeToString,
             ),
-            'CheckIn': grpc.unary_unary_rpc_method_handler(
-                    servicer.CheckIn,
-                    request_deserializer=kinova__pb2.CheckInRequest.FromString,
-                    response_serializer=kinova__pb2.CheckInReply.SerializeToString,
+            'Kinova_CheckIn': grpc.unary_unary_rpc_method_handler(
+                    servicer.Kinova_CheckIn,
+                    request_deserializer=kinova__pb2.Kinova_CheckInRequest.FromString,
+                    response_serializer=kinova__pb2.Kinova_CheckInReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -68,7 +68,7 @@ class Kinova(object):
     """
 
     @staticmethod
-    def CheckOut(request,
+    def Kinova_CheckOut(request,
             target,
             options=(),
             channel_credentials=None,
@@ -78,14 +78,14 @@ class Kinova(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Kinova/CheckOut',
-            kinova__pb2.CheckOutRequest.SerializeToString,
-            kinova__pb2.CheckOutReply.FromString,
+        return grpc.experimental.unary_unary(request, target, '/Kinova/Kinova_CheckOut',
+            kinova__pb2.Kinova_CheckOutRequest.SerializeToString,
+            kinova__pb2.Kinova_CheckOutReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def CheckIn(request,
+    def Kinova_CheckIn(request,
             target,
             options=(),
             channel_credentials=None,
@@ -95,8 +95,8 @@ class Kinova(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Kinova/CheckIn',
-            kinova__pb2.CheckInRequest.SerializeToString,
-            kinova__pb2.CheckInReply.FromString,
+        return grpc.experimental.unary_unary(request, target, '/Kinova/Kinova_CheckIn',
+            kinova__pb2.Kinova_CheckInRequest.SerializeToString,
+            kinova__pb2.Kinova_CheckInReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

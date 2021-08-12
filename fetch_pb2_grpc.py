@@ -15,15 +15,15 @@ class FetchStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.CheckOut = channel.unary_unary(
-                '/Fetch/CheckOut',
-                request_serializer=fetch__pb2.CheckOutRequest.SerializeToString,
-                response_deserializer=fetch__pb2.CheckOutReply.FromString,
+        self.Fetch_CheckOut = channel.unary_unary(
+                '/Fetch/Fetch_CheckOut',
+                request_serializer=fetch__pb2.Fetch_CheckOutRequest.SerializeToString,
+                response_deserializer=fetch__pb2.Fetch_CheckOutReply.FromString,
                 )
-        self.CheckIn = channel.unary_unary(
-                '/Fetch/CheckIn',
-                request_serializer=fetch__pb2.CheckInRequest.SerializeToString,
-                response_deserializer=fetch__pb2.CheckInReply.FromString,
+        self.Fetch_CheckIn = channel.unary_unary(
+                '/Fetch/Fetch_CheckIn',
+                request_serializer=fetch__pb2.Fetch_CheckInRequest.SerializeToString,
+                response_deserializer=fetch__pb2.Fetch_CheckInReply.FromString,
                 )
 
 
@@ -31,13 +31,13 @@ class FetchServicer(object):
     """The Fetch service definition.
     """
 
-    def CheckOut(self, request, context):
+    def Fetch_CheckOut(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def CheckIn(self, request, context):
+    def Fetch_CheckIn(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -46,15 +46,15 @@ class FetchServicer(object):
 
 def add_FetchServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'CheckOut': grpc.unary_unary_rpc_method_handler(
-                    servicer.CheckOut,
-                    request_deserializer=fetch__pb2.CheckOutRequest.FromString,
-                    response_serializer=fetch__pb2.CheckOutReply.SerializeToString,
+            'Fetch_CheckOut': grpc.unary_unary_rpc_method_handler(
+                    servicer.Fetch_CheckOut,
+                    request_deserializer=fetch__pb2.Fetch_CheckOutRequest.FromString,
+                    response_serializer=fetch__pb2.Fetch_CheckOutReply.SerializeToString,
             ),
-            'CheckIn': grpc.unary_unary_rpc_method_handler(
-                    servicer.CheckIn,
-                    request_deserializer=fetch__pb2.CheckInRequest.FromString,
-                    response_serializer=fetch__pb2.CheckInReply.SerializeToString,
+            'Fetch_CheckIn': grpc.unary_unary_rpc_method_handler(
+                    servicer.Fetch_CheckIn,
+                    request_deserializer=fetch__pb2.Fetch_CheckInRequest.FromString,
+                    response_serializer=fetch__pb2.Fetch_CheckInReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -68,7 +68,7 @@ class Fetch(object):
     """
 
     @staticmethod
-    def CheckOut(request,
+    def Fetch_CheckOut(request,
             target,
             options=(),
             channel_credentials=None,
@@ -78,14 +78,14 @@ class Fetch(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Fetch/CheckOut',
-            fetch__pb2.CheckOutRequest.SerializeToString,
-            fetch__pb2.CheckOutReply.FromString,
+        return grpc.experimental.unary_unary(request, target, '/Fetch/Fetch_CheckOut',
+            fetch__pb2.Fetch_CheckOutRequest.SerializeToString,
+            fetch__pb2.Fetch_CheckOutReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def CheckIn(request,
+    def Fetch_CheckIn(request,
             target,
             options=(),
             channel_credentials=None,
@@ -95,8 +95,8 @@ class Fetch(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Fetch/CheckIn',
-            fetch__pb2.CheckInRequest.SerializeToString,
-            fetch__pb2.CheckInReply.FromString,
+        return grpc.experimental.unary_unary(request, target, '/Fetch/Fetch_CheckIn',
+            fetch__pb2.Fetch_CheckInRequest.SerializeToString,
+            fetch__pb2.Fetch_CheckInReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

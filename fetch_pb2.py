@@ -19,36 +19,36 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0b\x66\x65tch.proto\"P\n\x0f\x43heckOutRequest\x12\x0e\n\x06kit_ID\x18\x01 \x01(\x05\x12\x14\n\x0ckit_location\x18\x02 \x01(\x05\x12\x17\n\x0ftarget_location\x18\x03 \x01(\x05\"O\n\x0e\x43heckInRequest\x12\x0e\n\x06kit_ID\x18\x01 \x01(\x05\x12\x14\n\x0ckit_location\x18\x02 \x01(\x05\x12\x17\n\x0ftarget_location\x18\x03 \x01(\x05\"\"\n\rCheckOutReply\x12\x11\n\tdelivered\x18\x01 \x01(\x08\" \n\x0c\x43heckInReply\x12\x10\n\x08returned\x18\x01 \x01(\x08\x32\x64\n\x05\x46\x65tch\x12.\n\x08\x43heckOut\x12\x10.CheckOutRequest\x1a\x0e.CheckOutReply\"\x00\x12+\n\x07\x43heckIn\x12\x0f.CheckInRequest\x1a\r.CheckInReply\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x0b\x66\x65tch.proto\"V\n\x15\x46\x65tch_CheckOutRequest\x12\x0e\n\x06kit_ID\x18\x01 \x01(\x05\x12\x14\n\x0ckit_location\x18\x02 \x01(\x05\x12\x17\n\x0ftarget_location\x18\x03 \x01(\x05\"U\n\x14\x46\x65tch_CheckInRequest\x12\x0e\n\x06kit_ID\x18\x01 \x01(\x05\x12\x14\n\x0ckit_location\x18\x02 \x01(\x05\x12\x17\n\x0ftarget_location\x18\x03 \x01(\x05\"(\n\x13\x46\x65tch_CheckOutReply\x12\x11\n\tdelivered\x18\x01 \x01(\x08\"&\n\x12\x46\x65tch_CheckInReply\x12\x10\n\x08returned\x18\x01 \x01(\x08\x32\x88\x01\n\x05\x46\x65tch\x12@\n\x0e\x46\x65tch_CheckOut\x12\x16.Fetch_CheckOutRequest\x1a\x14.Fetch_CheckOutReply\"\x00\x12=\n\rFetch_CheckIn\x12\x15.Fetch_CheckInRequest\x1a\x13.Fetch_CheckInReply\"\x00\x62\x06proto3'
 )
 
 
 
 
-_CHECKOUTREQUEST = _descriptor.Descriptor(
-  name='CheckOutRequest',
-  full_name='CheckOutRequest',
+_FETCH_CHECKOUTREQUEST = _descriptor.Descriptor(
+  name='Fetch_CheckOutRequest',
+  full_name='Fetch_CheckOutRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='kit_ID', full_name='CheckOutRequest.kit_ID', index=0,
+      name='kit_ID', full_name='Fetch_CheckOutRequest.kit_ID', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='kit_location', full_name='CheckOutRequest.kit_location', index=1,
+      name='kit_location', full_name='Fetch_CheckOutRequest.kit_location', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='target_location', full_name='CheckOutRequest.target_location', index=2,
+      name='target_location', full_name='Fetch_CheckOutRequest.target_location', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -67,34 +67,34 @@ _CHECKOUTREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=15,
-  serialized_end=95,
+  serialized_end=101,
 )
 
 
-_CHECKINREQUEST = _descriptor.Descriptor(
-  name='CheckInRequest',
-  full_name='CheckInRequest',
+_FETCH_CHECKINREQUEST = _descriptor.Descriptor(
+  name='Fetch_CheckInRequest',
+  full_name='Fetch_CheckInRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='kit_ID', full_name='CheckInRequest.kit_ID', index=0,
+      name='kit_ID', full_name='Fetch_CheckInRequest.kit_ID', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='kit_location', full_name='CheckInRequest.kit_location', index=1,
+      name='kit_location', full_name='Fetch_CheckInRequest.kit_location', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='target_location', full_name='CheckInRequest.target_location', index=2,
+      name='target_location', full_name='Fetch_CheckInRequest.target_location', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -112,21 +112,21 @@ _CHECKINREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=97,
-  serialized_end=176,
+  serialized_start=103,
+  serialized_end=188,
 )
 
 
-_CHECKOUTREPLY = _descriptor.Descriptor(
-  name='CheckOutReply',
-  full_name='CheckOutReply',
+_FETCH_CHECKOUTREPLY = _descriptor.Descriptor(
+  name='Fetch_CheckOutReply',
+  full_name='Fetch_CheckOutReply',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='delivered', full_name='CheckOutReply.delivered', index=0,
+      name='delivered', full_name='Fetch_CheckOutReply.delivered', index=0,
       number=1, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -144,21 +144,21 @@ _CHECKOUTREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=178,
-  serialized_end=212,
+  serialized_start=190,
+  serialized_end=230,
 )
 
 
-_CHECKINREPLY = _descriptor.Descriptor(
-  name='CheckInReply',
-  full_name='CheckInReply',
+_FETCH_CHECKINREPLY = _descriptor.Descriptor(
+  name='Fetch_CheckInReply',
+  full_name='Fetch_CheckInReply',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='returned', full_name='CheckInReply.returned', index=0,
+      name='returned', full_name='Fetch_CheckInReply.returned', index=0,
       number=1, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -176,43 +176,43 @@ _CHECKINREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=214,
-  serialized_end=246,
+  serialized_start=232,
+  serialized_end=270,
 )
 
-DESCRIPTOR.message_types_by_name['CheckOutRequest'] = _CHECKOUTREQUEST
-DESCRIPTOR.message_types_by_name['CheckInRequest'] = _CHECKINREQUEST
-DESCRIPTOR.message_types_by_name['CheckOutReply'] = _CHECKOUTREPLY
-DESCRIPTOR.message_types_by_name['CheckInReply'] = _CHECKINREPLY
+DESCRIPTOR.message_types_by_name['Fetch_CheckOutRequest'] = _FETCH_CHECKOUTREQUEST
+DESCRIPTOR.message_types_by_name['Fetch_CheckInRequest'] = _FETCH_CHECKINREQUEST
+DESCRIPTOR.message_types_by_name['Fetch_CheckOutReply'] = _FETCH_CHECKOUTREPLY
+DESCRIPTOR.message_types_by_name['Fetch_CheckInReply'] = _FETCH_CHECKINREPLY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-CheckOutRequest = _reflection.GeneratedProtocolMessageType('CheckOutRequest', (_message.Message,), {
-  'DESCRIPTOR' : _CHECKOUTREQUEST,
+Fetch_CheckOutRequest = _reflection.GeneratedProtocolMessageType('Fetch_CheckOutRequest', (_message.Message,), {
+  'DESCRIPTOR' : _FETCH_CHECKOUTREQUEST,
   '__module__' : 'fetch_pb2'
-  # @@protoc_insertion_point(class_scope:CheckOutRequest)
+  # @@protoc_insertion_point(class_scope:Fetch_CheckOutRequest)
   })
-_sym_db.RegisterMessage(CheckOutRequest)
+_sym_db.RegisterMessage(Fetch_CheckOutRequest)
 
-CheckInRequest = _reflection.GeneratedProtocolMessageType('CheckInRequest', (_message.Message,), {
-  'DESCRIPTOR' : _CHECKINREQUEST,
+Fetch_CheckInRequest = _reflection.GeneratedProtocolMessageType('Fetch_CheckInRequest', (_message.Message,), {
+  'DESCRIPTOR' : _FETCH_CHECKINREQUEST,
   '__module__' : 'fetch_pb2'
-  # @@protoc_insertion_point(class_scope:CheckInRequest)
+  # @@protoc_insertion_point(class_scope:Fetch_CheckInRequest)
   })
-_sym_db.RegisterMessage(CheckInRequest)
+_sym_db.RegisterMessage(Fetch_CheckInRequest)
 
-CheckOutReply = _reflection.GeneratedProtocolMessageType('CheckOutReply', (_message.Message,), {
-  'DESCRIPTOR' : _CHECKOUTREPLY,
+Fetch_CheckOutReply = _reflection.GeneratedProtocolMessageType('Fetch_CheckOutReply', (_message.Message,), {
+  'DESCRIPTOR' : _FETCH_CHECKOUTREPLY,
   '__module__' : 'fetch_pb2'
-  # @@protoc_insertion_point(class_scope:CheckOutReply)
+  # @@protoc_insertion_point(class_scope:Fetch_CheckOutReply)
   })
-_sym_db.RegisterMessage(CheckOutReply)
+_sym_db.RegisterMessage(Fetch_CheckOutReply)
 
-CheckInReply = _reflection.GeneratedProtocolMessageType('CheckInReply', (_message.Message,), {
-  'DESCRIPTOR' : _CHECKINREPLY,
+Fetch_CheckInReply = _reflection.GeneratedProtocolMessageType('Fetch_CheckInReply', (_message.Message,), {
+  'DESCRIPTOR' : _FETCH_CHECKINREPLY,
   '__module__' : 'fetch_pb2'
-  # @@protoc_insertion_point(class_scope:CheckInReply)
+  # @@protoc_insertion_point(class_scope:Fetch_CheckInReply)
   })
-_sym_db.RegisterMessage(CheckInReply)
+_sym_db.RegisterMessage(Fetch_CheckInReply)
 
 
 
@@ -223,26 +223,26 @@ _FETCH = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=248,
-  serialized_end=348,
+  serialized_start=273,
+  serialized_end=409,
   methods=[
   _descriptor.MethodDescriptor(
-    name='CheckOut',
-    full_name='Fetch.CheckOut',
+    name='Fetch_CheckOut',
+    full_name='Fetch.Fetch_CheckOut',
     index=0,
     containing_service=None,
-    input_type=_CHECKOUTREQUEST,
-    output_type=_CHECKOUTREPLY,
+    input_type=_FETCH_CHECKOUTREQUEST,
+    output_type=_FETCH_CHECKOUTREPLY,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='CheckIn',
-    full_name='Fetch.CheckIn',
+    name='Fetch_CheckIn',
+    full_name='Fetch.Fetch_CheckIn',
     index=1,
     containing_service=None,
-    input_type=_CHECKINREQUEST,
-    output_type=_CHECKINREPLY,
+    input_type=_FETCH_CHECKINREQUEST,
+    output_type=_FETCH_CHECKINREPLY,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

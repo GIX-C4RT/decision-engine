@@ -19,29 +19,29 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0ckinova.proto\"4\n\x0f\x43heckOutRequest\x12\x0e\n\x06kit_ID\x18\x01 \x01(\x05\x12\x11\n\titem_list\x18\x02 \x03(\x05\"3\n\x0e\x43heckInRequest\x12\x0e\n\x06kit_ID\x18\x01 \x01(\x05\x12\x11\n\titem_list\x18\x02 \x03(\x05\"#\n\rCheckOutReply\x12\x12\n\nitem_ready\x18\x01 \x01(\x08\"%\n\x0c\x43heckInReply\x12\x15\n\ritem_returned\x18\x01 \x01(\x08\x32\x65\n\x06Kinova\x12.\n\x08\x43heckOut\x12\x10.CheckOutRequest\x1a\x0e.CheckOutReply\"\x00\x12+\n\x07\x43heckIn\x12\x0f.CheckInRequest\x1a\r.CheckInReply\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x0ckinova.proto\";\n\x16Kinova_CheckOutRequest\x12\x0e\n\x06kit_ID\x18\x01 \x01(\x05\x12\x11\n\titem_list\x18\x02 \x03(\x05\":\n\x15Kinova_CheckInRequest\x12\x0e\n\x06kit_ID\x18\x01 \x01(\x05\x12\x11\n\titem_list\x18\x02 \x03(\x05\"*\n\x14Kinova_CheckOutReply\x12\x12\n\nitem_ready\x18\x01 \x01(\x08\",\n\x13Kinova_CheckInReply\x12\x15\n\ritem_returned\x18\x01 \x01(\x08\x32\x8f\x01\n\x06Kinova\x12\x43\n\x0fKinova_CheckOut\x12\x17.Kinova_CheckOutRequest\x1a\x15.Kinova_CheckOutReply\"\x00\x12@\n\x0eKinova_CheckIn\x12\x16.Kinova_CheckInRequest\x1a\x14.Kinova_CheckInReply\"\x00\x62\x06proto3'
 )
 
 
 
 
-_CHECKOUTREQUEST = _descriptor.Descriptor(
-  name='CheckOutRequest',
-  full_name='CheckOutRequest',
+_KINOVA_CHECKOUTREQUEST = _descriptor.Descriptor(
+  name='Kinova_CheckOutRequest',
+  full_name='Kinova_CheckOutRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='kit_ID', full_name='CheckOutRequest.kit_ID', index=0,
+      name='kit_ID', full_name='Kinova_CheckOutRequest.kit_ID', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='item_list', full_name='CheckOutRequest.item_list', index=1,
+      name='item_list', full_name='Kinova_CheckOutRequest.item_list', index=1,
       number=2, type=5, cpp_type=1, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -60,27 +60,27 @@ _CHECKOUTREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=16,
-  serialized_end=68,
+  serialized_end=75,
 )
 
 
-_CHECKINREQUEST = _descriptor.Descriptor(
-  name='CheckInRequest',
-  full_name='CheckInRequest',
+_KINOVA_CHECKINREQUEST = _descriptor.Descriptor(
+  name='Kinova_CheckInRequest',
+  full_name='Kinova_CheckInRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='kit_ID', full_name='CheckInRequest.kit_ID', index=0,
+      name='kit_ID', full_name='Kinova_CheckInRequest.kit_ID', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='item_list', full_name='CheckInRequest.item_list', index=1,
+      name='item_list', full_name='Kinova_CheckInRequest.item_list', index=1,
       number=2, type=5, cpp_type=1, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -98,21 +98,21 @@ _CHECKINREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=70,
-  serialized_end=121,
+  serialized_start=77,
+  serialized_end=135,
 )
 
 
-_CHECKOUTREPLY = _descriptor.Descriptor(
-  name='CheckOutReply',
-  full_name='CheckOutReply',
+_KINOVA_CHECKOUTREPLY = _descriptor.Descriptor(
+  name='Kinova_CheckOutReply',
+  full_name='Kinova_CheckOutReply',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='item_ready', full_name='CheckOutReply.item_ready', index=0,
+      name='item_ready', full_name='Kinova_CheckOutReply.item_ready', index=0,
       number=1, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -130,21 +130,21 @@ _CHECKOUTREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=123,
-  serialized_end=158,
+  serialized_start=137,
+  serialized_end=179,
 )
 
 
-_CHECKINREPLY = _descriptor.Descriptor(
-  name='CheckInReply',
-  full_name='CheckInReply',
+_KINOVA_CHECKINREPLY = _descriptor.Descriptor(
+  name='Kinova_CheckInReply',
+  full_name='Kinova_CheckInReply',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='item_returned', full_name='CheckInReply.item_returned', index=0,
+      name='item_returned', full_name='Kinova_CheckInReply.item_returned', index=0,
       number=1, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -162,43 +162,43 @@ _CHECKINREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=160,
-  serialized_end=197,
+  serialized_start=181,
+  serialized_end=225,
 )
 
-DESCRIPTOR.message_types_by_name['CheckOutRequest'] = _CHECKOUTREQUEST
-DESCRIPTOR.message_types_by_name['CheckInRequest'] = _CHECKINREQUEST
-DESCRIPTOR.message_types_by_name['CheckOutReply'] = _CHECKOUTREPLY
-DESCRIPTOR.message_types_by_name['CheckInReply'] = _CHECKINREPLY
+DESCRIPTOR.message_types_by_name['Kinova_CheckOutRequest'] = _KINOVA_CHECKOUTREQUEST
+DESCRIPTOR.message_types_by_name['Kinova_CheckInRequest'] = _KINOVA_CHECKINREQUEST
+DESCRIPTOR.message_types_by_name['Kinova_CheckOutReply'] = _KINOVA_CHECKOUTREPLY
+DESCRIPTOR.message_types_by_name['Kinova_CheckInReply'] = _KINOVA_CHECKINREPLY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-CheckOutRequest = _reflection.GeneratedProtocolMessageType('CheckOutRequest', (_message.Message,), {
-  'DESCRIPTOR' : _CHECKOUTREQUEST,
+Kinova_CheckOutRequest = _reflection.GeneratedProtocolMessageType('Kinova_CheckOutRequest', (_message.Message,), {
+  'DESCRIPTOR' : _KINOVA_CHECKOUTREQUEST,
   '__module__' : 'kinova_pb2'
-  # @@protoc_insertion_point(class_scope:CheckOutRequest)
+  # @@protoc_insertion_point(class_scope:Kinova_CheckOutRequest)
   })
-_sym_db.RegisterMessage(CheckOutRequest)
+_sym_db.RegisterMessage(Kinova_CheckOutRequest)
 
-CheckInRequest = _reflection.GeneratedProtocolMessageType('CheckInRequest', (_message.Message,), {
-  'DESCRIPTOR' : _CHECKINREQUEST,
+Kinova_CheckInRequest = _reflection.GeneratedProtocolMessageType('Kinova_CheckInRequest', (_message.Message,), {
+  'DESCRIPTOR' : _KINOVA_CHECKINREQUEST,
   '__module__' : 'kinova_pb2'
-  # @@protoc_insertion_point(class_scope:CheckInRequest)
+  # @@protoc_insertion_point(class_scope:Kinova_CheckInRequest)
   })
-_sym_db.RegisterMessage(CheckInRequest)
+_sym_db.RegisterMessage(Kinova_CheckInRequest)
 
-CheckOutReply = _reflection.GeneratedProtocolMessageType('CheckOutReply', (_message.Message,), {
-  'DESCRIPTOR' : _CHECKOUTREPLY,
+Kinova_CheckOutReply = _reflection.GeneratedProtocolMessageType('Kinova_CheckOutReply', (_message.Message,), {
+  'DESCRIPTOR' : _KINOVA_CHECKOUTREPLY,
   '__module__' : 'kinova_pb2'
-  # @@protoc_insertion_point(class_scope:CheckOutReply)
+  # @@protoc_insertion_point(class_scope:Kinova_CheckOutReply)
   })
-_sym_db.RegisterMessage(CheckOutReply)
+_sym_db.RegisterMessage(Kinova_CheckOutReply)
 
-CheckInReply = _reflection.GeneratedProtocolMessageType('CheckInReply', (_message.Message,), {
-  'DESCRIPTOR' : _CHECKINREPLY,
+Kinova_CheckInReply = _reflection.GeneratedProtocolMessageType('Kinova_CheckInReply', (_message.Message,), {
+  'DESCRIPTOR' : _KINOVA_CHECKINREPLY,
   '__module__' : 'kinova_pb2'
-  # @@protoc_insertion_point(class_scope:CheckInReply)
+  # @@protoc_insertion_point(class_scope:Kinova_CheckInReply)
   })
-_sym_db.RegisterMessage(CheckInReply)
+_sym_db.RegisterMessage(Kinova_CheckInReply)
 
 
 
@@ -209,26 +209,26 @@ _KINOVA = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=199,
-  serialized_end=300,
+  serialized_start=228,
+  serialized_end=371,
   methods=[
   _descriptor.MethodDescriptor(
-    name='CheckOut',
-    full_name='Kinova.CheckOut',
+    name='Kinova_CheckOut',
+    full_name='Kinova.Kinova_CheckOut',
     index=0,
     containing_service=None,
-    input_type=_CHECKOUTREQUEST,
-    output_type=_CHECKOUTREPLY,
+    input_type=_KINOVA_CHECKOUTREQUEST,
+    output_type=_KINOVA_CHECKOUTREPLY,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='CheckIn',
-    full_name='Kinova.CheckIn',
+    name='Kinova_CheckIn',
+    full_name='Kinova.Kinova_CheckIn',
     index=1,
     containing_service=None,
-    input_type=_CHECKINREQUEST,
-    output_type=_CHECKINREPLY,
+    input_type=_KINOVA_CHECKINREQUEST,
+    output_type=_KINOVA_CHECKINREPLY,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
