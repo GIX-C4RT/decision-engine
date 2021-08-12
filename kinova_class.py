@@ -44,16 +44,16 @@ class Kinova:
   #   print("Kinova " + self.address_ + " completes operation")
   #   print("Check response value is it delivered? ", future.result().item_ready)
 
-  def CheckOut(self, kit_ID = -1, kit_location = -1, target_location = -1, call_back = None):
+  def CheckOut(self, kit_ID = -1, item_list = [1,2,3], call_back = None):
     """
       Check out instruction that will be send to the fetch
     """
-    self.future_ = self.stub_.CheckOut.future(kinova_pb2.CheckOutRequest(kit_ID=kit_ID, kit_location=kit_location, target_location=target_location))
+    self.future_ = self.stub_.CheckOut.future(kinova_pb2.CheckOutRequest(kit_ID = kit_ID, item_list = item_list))
     if call_back:
       self.future_.add_done_callback(call_back)
 
 if __name__ == "__main__":
   myfetch = Kinova()
-  myfetch.CheckOut()
+  myfetch.CheckOut(call_back=lambda x: print("Sorting finished"))
   while True:
     pass
