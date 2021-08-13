@@ -66,6 +66,8 @@ if __name__ == "__main__":
   myengine.op_CheckIn(fetch_checkin_config1, kinova_checkin_config1)
   myengine.op_CheckIn(fetch_checkin_config2, kinova_checkin_config2)
   myengine.op_CheckOut(fetch_checkout_config, kinova_checkout_config)
+  myengine.op_CheckOut(fetch_checkout_config, kinova_checkout_config)
+  myengine.op_CheckOut(fetch_checkout_config, kinova_checkout_config)
 
   while True:
     time.sleep(1)
