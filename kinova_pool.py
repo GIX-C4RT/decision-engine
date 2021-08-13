@@ -4,7 +4,7 @@ import kinova_pb2_grpc
 
 import queue
 
-from kinova_class import Kinova
+from kinova_class import Kinova, KinovaConfig
 import time
 
 class Kinova_pool:
@@ -18,14 +18,23 @@ class Kinova_pool:
 
   Typical usage example:
 
-  mykinova_pool = Kinova_pool(2, ['localhost:50051', 'localhost:50052'])
+  mykinova_pool = Kinova_pool(2, ['localhost:50053', 'localhost:50054'])
 
+  print("first request comes in")
   kinova = mykinova_pool.get_kinova()
-  kinova.CheckOut()
+  kinova_checkout_config = KinovaConfig(operation="CheckOut", kit_ID=1, item_list=[1,2,3])
+  kinova_checkout_config.call_back_ = lambda : print("kinova1_done")
+  kinova.LoadConfig(kinova_checkout_config)
+  kinova()
   mykinova_pool.return_kinova(kinova)
 
+  time.sleep(4)
+  print("second request comes in")
   kinova = mykinova_pool.get_kinova()
-  kinova.CheckOut()
+  kinova_checkout_config = KinovaConfig(operation="CheckOut", kit_ID=1, item_list=[1,2,3])
+  kinova_checkout_config.call_back_ = lambda : print("kinova2_done")
+  kinova.LoadConfig(kinova_checkout_config)
+  kinova()
   mykinova_pool.return_kinova(kinova)
   """
   def __init__(self, n = 1, addresses = ['localhost:50051']) -> None:
@@ -55,25 +64,32 @@ class Kinova_pool:
 
   def return_kinova(self, kinova):
     """
-      return a kinova. set it's inuse state to False
+      return a kinova. by putting it back to the queue
+      unlocking is done in the callback see kinova_class.py MetaCallBack func
     """
     # We might need lock here the concurrency is relatively low 
     # so mutex won't have a big performance hit
     self.q_.put(kinova)
 
 if __name__ == "__main__":
-  import time
+  # Make sure kinova_server.py is running first
   mykinova_pool = Kinova_pool(2, ['localhost:50053', 'localhost:50054'])
 
   print("first request comes in")
   kinova = mykinova_pool.get_kinova()
-  kinova.CheckOut(call_back=lambda _: print("Kinova1_done"))
+  kinova_checkout_config = KinovaConfig(operation="CheckOut", kit_ID=1, item_list=[1,2,3])
+  kinova_checkout_config.call_back_ = lambda : print("kinova1_done")
+  kinova.LoadConfig(kinova_checkout_config)
+  kinova()
   mykinova_pool.return_kinova(kinova)
 
   time.sleep(4)
   print("second request comes in")
   kinova = mykinova_pool.get_kinova()
-  kinova.CheckOut(call_back=lambda _: print("Kinova2_done"))
+  kinova_checkout_config = KinovaConfig(operation="CheckOut", kit_ID=1, item_list=[1,2,3])
+  kinova_checkout_config.call_back_ = lambda : print("kinova2_done")
+  kinova.LoadConfig(kinova_checkout_config)
+  kinova()
   mykinova_pool.return_kinova(kinova)
 
   while True:
