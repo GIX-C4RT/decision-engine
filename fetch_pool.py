@@ -4,7 +4,7 @@ import fetch_pb2_grpc
 
 import queue
 
-from fetch_class import Fetch
+from fetch_class import Fetch, FetchConfig
 import time
 
 class Fetch_pool:
@@ -20,12 +20,21 @@ class Fetch_pool:
 
   myfetch_pool = Fetch_pool(2, ['localhost:50051', 'localhost:50052'])
 
+  print("first request comes in")
   fetch = myfetch_pool.get_fetch()
-  fetch.CheckOut()
+  fetch_checkout_config = FetchConfig(operation="CheckOut", kit_ID=1, kit_location=255, target_location=255)
+  fetch_checkout_config.call_back_ = lambda : print("fetch1_done")
+  fetch.LoadConfig(fetch_checkout_config)
+  fetch()
   myfetch_pool.return_fetch(fetch)
 
+  time.sleep(4)
+  print("second request comes in")
   fetch = myfetch_pool.get_fetch()
-  fetch.CheckOut()
+  fetch_checkout_config = FetchConfig(operation="CheckOut", kit_ID=2, kit_location=128, target_location=128)
+  fetch_checkout_config.call_back_ = lambda : print("fetch2_done")
+  fetch.LoadConfig(fetch_checkout_config)
+  fetch()
   myfetch_pool.return_fetch(fetch)
   """
   def __init__(self, n = 1, addresses = ['localhost:50051']) -> None:
@@ -41,10 +50,8 @@ class Fetch_pool:
       Get a fetch. If not already in use then set it's inuse state to true
     """
     fetch = self.q_.get()
-    # We might need lock here the concurrency is relatively low 
     # Useing lock to prevent if robot is checked out and inuse set to true but
     # at the same time the same robot is being returned by another request
-    # so mutex won't have a big performance hit
     while True:
       fetch.inuse_lock_.acquire()
       if not fetch.inuse_:
@@ -57,25 +64,30 @@ class Fetch_pool:
 
   def return_fetch(self, fetch):
     """
-      return a fetch. set it's inuse state to False
+      return a fetch. by putting it back to the queue
+      unlocking is done in the callback see fetch_class.py MetaCallBack func
     """
-    # We might need lock here the concurrency is relatively low 
-    # so mutex won't have a big performance hit
     self.q_.put(fetch)
 
 if __name__ == "__main__":
-  import time
+  # Make sure fetch_server.py is running first
   myfetch_pool = Fetch_pool(2, ['localhost:50051', 'localhost:50052'])
 
   print("first request comes in")
   fetch = myfetch_pool.get_fetch()
-  fetch.CheckOut(call_back=lambda _: print("fetch1_done"))
+  fetch_checkout_config = FetchConfig(operation="CheckOut", kit_ID=1, kit_location=255, target_location=255)
+  fetch_checkout_config.call_back_ = lambda : print("fetch1_done")
+  fetch.LoadConfig(fetch_checkout_config)
+  fetch()
   myfetch_pool.return_fetch(fetch)
 
   time.sleep(4)
   print("second request comes in")
   fetch = myfetch_pool.get_fetch()
-  fetch.CheckOut(call_back=lambda _: print("fetch2_done"))
+  fetch_checkout_config = FetchConfig(operation="CheckOut", kit_ID=2, kit_location=128, target_location=128)
+  fetch_checkout_config.call_back_ = lambda : print("fetch2_done")
+  fetch.LoadConfig(fetch_checkout_config)
+  fetch()
   myfetch_pool.return_fetch(fetch)
 
   while True:
