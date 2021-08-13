@@ -7,29 +7,35 @@ from typing import Any
 
 class KinovaConfig:
   """An reuseable configuration object for potential mass deployment with low code interface
+
+     Can change to XML or JSON format for easy editing
   """
   def __init__(self, operation = None, kit_ID = None, item_list = None, call_back = None) -> None:
-      self.operation_ = operation
-      self.kit_ID_ = kit_ID
-      self.item_list_ = item_list
-      self.call_back_ = call_back
+    """
+      Initialize the config object
+    """
+    self.operation_ = operation
+    self.kit_ID_ = kit_ID
+    self.item_list_ = item_list
+    self.call_back_ = call_back
 
 class Kinova:
-  """Fetch Object that contains the gRPC connection to a fetch at a certain ip.
+  """Kinova Object that contains the gRPC connection to a kinova at a certain ip.
 
-  This class is mainly used for the Fetch_pool class. Since a gRPC connection need
+  This class is mainly used for the Kinova_pool class. Since a gRPC connection need
   to be remain connected this object will hold the connection until it is getting 
   destructed
 
   Typical usage example:
 
-  myfetch = Fetch()
-  myfetch2 = Fetch('localhost:50051')
-  myfetch.CheckOut()
+  kinova_checkout_config = KinovaConfig(operation="CheckOut", kit_ID=1, kit_location=255, target_location=255)
+  kinova = Kinova()
+  kinova.LoadConfig(kinova_checkout_config)
+  kinova()
   """
   def __init__(self, address = 'localhost:50051') -> None:
     """
-      Initialize the fetch object, initialize the gRPC channel with address and stub
+      Initialize the kinova object, initialize the gRPC channel with address and stub
       Also sets inuse to False and create a lock for modify it concurrently
     """
     self.inuse_ = False
@@ -41,22 +47,36 @@ class Kinova:
 
   def __del__(self):
     """
-      Destructor of the fetch object which will close the gRPC channel 
+      Destructor of the kinova object which will close the gRPC channel 
     """
     print("deleting Kinova at " + self.address_)
     self.channel_.close()
 
   def __call__(self, *args: Any, **kwds: Any) -> Any:
-      # should change to dictionary based condition for future extension
-      
-      if self.operation_ == "CheckOut":
-        self.future_ = self.stub_.Kinova_CheckOut.future(kinova_pb2.Kinova_CheckOutRequest(kit_ID = self.kit_ID_, item_list = self.item_list_))
-        self.future_.add_done_callback(self.MetaCallBack_)
-      elif self.operation_ == "CheckIn":
-        self.future_ = self.stub_.Kinova_CheckIn.future(kinova_pb2.Kinova_CheckInRequest(kit_ID = self.kit_ID_, item_list = self.item_list_))
-        self.future_.add_done_callback(self.MetaCallBack_)
+    """
+      Main call that will init the RPC 
+      Also sets the call back to meta call back
+
+      TODO: should use dict based condition for extendbility
+    """
+    if self.operation_ == "CheckOut":
+      self.future_ = self.stub_.Kinova_CheckOut.future(kinova_pb2.Kinova_CheckOutRequest(kit_ID = self.kit_ID_, item_list = self.item_list_))
+      self.future_.add_done_callback(self.MetaCallBack_)
+    elif self.operation_ == "CheckIn":
+      self.future_ = self.stub_.Kinova_CheckIn.future(kinova_pb2.Kinova_CheckInRequest(kit_ID = self.kit_ID_, item_list = self.item_list_))
+      self.future_.add_done_callback(self.MetaCallBack_)
 
   def MetaCallBack_(self, future):
+    """
+      This will be called after the async RPC routing finished which means this kinova
+      object is no longer in used. So if we can get the lock (There might be some one
+      wants to get this object from the pool but that function have a time.sleep(1) in
+      the loop that check the lock [it will acquire the lock check the inuse state then
+      release the lock] so no deadlock will happen. Here the acquire will block until 
+      it gets the lock)we can set it to free state and invoke the actual call back
+
+      TODO: NEED TO CHECK IF RPC CALL SUCCESS
+    """
     self.inuse_lock_.acquire()
     self.inuse_ = False
     self.inuse_lock_.release()
@@ -64,28 +84,20 @@ class Kinova:
       self.call_back_()
 
   def LoadConfig(self, config: KinovaConfig):
+    """
+      Simple helper for loading config object
+    """
     self.operation_ = config.operation_
     self.kit_ID_ = config.kit_ID_
     self.item_list_ = config.item_list_
     self.call_back_ = config.call_back_
-  # def operation_complete(self, future):
-  #   """
-  #     Call back when the checkout process is done. 
-  #     Depending on situation it might call Kinova CheckOut function for next step
-  #   """
-  #   print("Kinova " + self.address_ + " completes operation")
-  #   print("Check response value is it delivered? ", future.result().item_ready)
-
-  # def CheckOut(self, kit_ID = -1, item_list = [1,2,3], call_back = None):
-  #   """
-  #     Check out instruction that will be send to the fetch
-  #   """
-  #   self.future_ = self.stub_.Kinova_CheckOut.future(kinova_pb2.Kinova_CheckOutRequest(kit_ID = kit_ID, item_list = item_list))
-  #   if call_back:
-  #     self.future_.add_done_callback(call_back)
 
 if __name__ == "__main__":
-  myfetch = Kinova()
-  myfetch.CheckOut(call_back=lambda x: print("Sorting finished"))
+  # Make sure kinova_server.py is running first
+  kinova_checkout_config = KinovaConfig(operation="CheckOut", kit_ID=1, item_list=[1,2,3])
+  kinova_checkout_config.call_back_ = lambda : print("CheckOut Success")
+  kinova = Kinova('localhost:50053')
+  kinova.LoadConfig(kinova_checkout_config)
+  kinova()
   while True:
     pass

@@ -62,6 +62,8 @@ class Fetch:
     """
       Main call that will init the RPC 
       Also sets the call back to meta call back
+
+      TODO: should use dict based condition for extendbility
     """
     if self.operation_ == "CheckOut":
       self.future_ = self.stub_.Fetch_CheckOut.future(fetch_pb2.Fetch_CheckOutRequest(kit_ID=self.kit_ID_, kit_location=self.kit_location_, target_location=self.target_location_))
@@ -78,6 +80,8 @@ class Fetch:
       the loop that check the lock [it will acquire the lock check the inuse state then
       release the lock] so no deadlock will happen. Here the acquire will block until 
       it gets the lock)we can set it to free state and invoke the actual call back
+
+      TODO: NEED TO CHECK IF RPC CALL SUCCESS
     """
     self.inuse_lock_.acquire()
     self.inuse_ = False
