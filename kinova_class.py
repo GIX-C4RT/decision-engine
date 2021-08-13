@@ -28,8 +28,9 @@ class Kinova:
 
   Typical usage example:
 
-  kinova_checkout_config = KinovaConfig(operation="CheckOut", kit_ID=1, kit_location=255, target_location=255)
-  kinova = Kinova()
+  kinova_checkout_config = KinovaConfig(operation="CheckOut", kit_ID=1, item_list=[1,2,3])
+  kinova_checkout_config.call_back_ = lambda : print("CheckOut Success")
+  kinova = Kinova('localhost:50053')
   kinova.LoadConfig(kinova_checkout_config)
   kinova()
   """
