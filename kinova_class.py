@@ -8,12 +8,10 @@ from typing import Any
 class KinovaConfig:
   """An reuseable configuration object for potential mass deployment with low code interface
   """
-  def __init__(self, operation = None, kit_ID = None, item_list = None, item_ready = None, item_returned = None, call_back = None) -> None:
+  def __init__(self, operation = None, kit_ID = None, item_list = None, call_back = None) -> None:
       self.operation_ = operation
       self.kit_ID_ = kit_ID
       self.item_list_ = item_list
-      self.item_ready_ = item_ready
-      self.item_returned_ = item_returned
       self.call_back_ = call_back
 
 class Kinova:
@@ -49,16 +47,18 @@ class Kinova:
     self.channel_.close()
 
   def __call__(self, *args: Any, **kwds: Any) -> Any:
+      # should change to dictionary based condition for future extension
       if self.operation_ == "CheckOut":
         self.future_ = self.stub_.Kinova_CheckOut.future(kinova_pb2.Kinova_CheckOutRequest(kit_ID = self.kit_ID_, item_list = self.item_list_))
+        self.future_.add_done_callback(self.call_back_)
+      elif self.operation_ == "CheckIn":
+        self.future_ = self.stub_.Kinova_CheckIn.future(kinova_pb2.Kinova_CheckInRequest(kit_ID = self.kit_ID_, item_list = self.item_list_))
         self.future_.add_done_callback(self.call_back_)
 
   def LoadConfig(self, config: KinovaConfig):
     self.operation_ = config.operation_
     self.kit_ID_ = config.kit_ID_
     self.item_list_ = config.item_list_
-    self.item_ready_ = config.item_ready_
-    self.item_returned_ = config.item_returned_
     self.call_back_ = config.call_back_
   # def operation_complete(self, future):
   #   """
@@ -68,13 +68,13 @@ class Kinova:
   #   print("Kinova " + self.address_ + " completes operation")
   #   print("Check response value is it delivered? ", future.result().item_ready)
 
-  def CheckOut(self, kit_ID = -1, item_list = [1,2,3], call_back = None):
-    """
-      Check out instruction that will be send to the fetch
-    """
-    self.future_ = self.stub_.Kinova_CheckOut.future(kinova_pb2.Kinova_CheckOutRequest(kit_ID = kit_ID, item_list = item_list))
-    if call_back:
-      self.future_.add_done_callback(call_back)
+  # def CheckOut(self, kit_ID = -1, item_list = [1,2,3], call_back = None):
+  #   """
+  #     Check out instruction that will be send to the fetch
+  #   """
+  #   self.future_ = self.stub_.Kinova_CheckOut.future(kinova_pb2.Kinova_CheckOutRequest(kit_ID = kit_ID, item_list = item_list))
+  #   if call_back:
+  #     self.future_.add_done_callback(call_back)
 
 if __name__ == "__main__":
   myfetch = Kinova()

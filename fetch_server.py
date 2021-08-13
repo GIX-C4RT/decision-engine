@@ -38,6 +38,14 @@ class Greeter(fetch_pb2_grpc.FetchServicer):
         print("Done")
         return fetch_pb2.Fetch_CheckOutReply(delivered=True)
 
+    def Fetch_CheckIn(self, request, context):
+        print("retriving packing...")
+        time.sleep(random.randint(1,3))
+        print("Docking...")
+        time.sleep(random.randint(1,3))
+        print("Done")
+        return fetch_pb2.Fetch_CheckInRequest(delivered=True)
+
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

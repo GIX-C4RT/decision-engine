@@ -31,8 +31,15 @@ class Greeter(kinova_pb2_grpc.KinovaServicer):
         for item in request.item_list:
           print("Grasping item ", item, "...")
           time.sleep(random.randint(1,3))
-        print("Done")
+        print("CheckOut Done")
         return kinova_pb2.Kinova_CheckOutReply(item_ready=True)
+
+    def Kinova_CheckIn(self, request, context):
+        for item in request.item_list:
+          print("Returning item ", item, "...")
+          time.sleep(random.randint(1,3))
+        print("CheckIn Done")
+        return kinova_pb2.Kinova_CheckInReply(item_returned=True)
 
 
 def serve():
