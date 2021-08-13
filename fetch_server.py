@@ -44,7 +44,7 @@ class Greeter(fetch_pb2_grpc.FetchServicer):
         print("Docking...")
         time.sleep(random.randint(1,3))
         print("Done")
-        return fetch_pb2.Fetch_CheckInRequest(delivered=True)
+        return fetch_pb2.Fetch_CheckInReply(returned=True)
 
 
 def serve():
