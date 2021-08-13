@@ -51,16 +51,17 @@ class Kinova:
       
       if self.operation_ == "CheckOut":
         self.future_ = self.stub_.Kinova_CheckOut.future(kinova_pb2.Kinova_CheckOutRequest(kit_ID = self.kit_ID_, item_list = self.item_list_))
-        self.future_.add_done_callback(self.meta_call_back)
+        self.future_.add_done_callback(self.MetaCallBack_)
       elif self.operation_ == "CheckIn":
         self.future_ = self.stub_.Kinova_CheckIn.future(kinova_pb2.Kinova_CheckInRequest(kit_ID = self.kit_ID_, item_list = self.item_list_))
-        self.future_.add_done_callback(self.meta_call_back)
+        self.future_.add_done_callback(self.MetaCallBack_)
 
-  def meta_call_back(self, future):
+  def MetaCallBack_(self, future):
     self.inuse_lock_.acquire()
     self.inuse_ = False
     self.inuse_lock_.release()
-    self.call_back_()
+    if self.call_back_:
+      self.call_back_()
 
   def LoadConfig(self, config: KinovaConfig):
     self.operation_ = config.operation_

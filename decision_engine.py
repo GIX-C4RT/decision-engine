@@ -21,11 +21,13 @@ class DecisionEngine:
     fetch = self.fetch_pool_.get_fetch()
     kinova = self.kinova_pool_.get_kinova() 
 
+    # Sequence of initialization is important because fetch would become a call back of kinova
     fetch_config.call_back_ = lambda:print("CheckOut finished")
     fetch.LoadConfig(fetch_config)
     
     kinova_config.call_back_ = fetch
     kinova.LoadConfig(kinova_config)
+    ###########################################################################################
 
     kinova()
 
@@ -38,11 +40,13 @@ class DecisionEngine:
     fetch = self.fetch_pool_.get_fetch()
     kinova = self.kinova_pool_.get_kinova()
 
+    # Sequence of initialization is important because kinova would become a call back of fetch
     kinova_config.call_back_ = lambda:print("CheckIn finished")
     kinova.LoadConfig(kinova_config)
 
     fetch_config.call_back_ = kinova
     fetch.LoadConfig(fetch_config)
+    ###########################################################################################
 
     fetch()
 

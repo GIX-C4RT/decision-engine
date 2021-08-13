@@ -11,11 +11,19 @@ class FetchConfig:
      Can change to XML or JSON format for easy editing
   """
   def __init__(self, operation = None, kit_ID = None, kit_location = None, target_location = None, call_back = None) -> None:
-      self.operation_ = operation
-      self.kit_ID_ = kit_ID
-      self.kit_location_ = kit_location
-      self.target_location_ = target_location
-      self.call_back_ = call_back
+    """
+      Initialize the config object
+    """
+    # Operation, currently support 'CheckOut' and 'CheckIn'
+    self.operation_ = operation
+    # kit_ID, the ID of the kit that fetch need to pickup or retrive
+    self.kit_ID_ = kit_ID
+    # kit_location, current location of the kit
+    self.kit_location_ = kit_location
+    # target_location, target location the kit need to go to
+    self.target_location_ = target_location
+    # call_back, call back function that will invoke after the call made to Fetch() functor
+    self.call_back_ = call_back
 
 class Fetch:
   """Fetch Object that contains the gRPC connection to a fetch at a certain ip.
@@ -26,9 +34,10 @@ class Fetch:
 
   Typical usage example:
 
-  myfetch = Fetch()
-  myfetch2 = Fetch('localhost:50051')
-  myfetch.CheckOut()
+  fetch_checkout_config = FetchConfig(operation="CheckOut", kit_ID=1, kit_location=255, target_location=255)
+  fetch = Fetch()
+  fetch.LoadConfig(fetch_checkout_config)
+  fetch()
   """
   def __init__(self, address = 'localhost:50051') -> None:
     """
@@ -50,44 +59,48 @@ class Fetch:
     self.channel_.close()
 
   def __call__(self, *args: Any, **kwds: Any) -> Any:
+    """
+      Main call that will init the RPC 
+      Also sets the call back to meta call back
+    """
     if self.operation_ == "CheckOut":
       self.future_ = self.stub_.Fetch_CheckOut.future(fetch_pb2.Fetch_CheckOutRequest(kit_ID=self.kit_ID_, kit_location=self.kit_location_, target_location=self.target_location_))
-      self.future_.add_done_callback(self.meta_call_back)
+      self.future_.add_done_callback(self.MetaCallBack_)
     elif self.operation_ == "CheckIn":
       self.future_ = self.stub_.Fetch_CheckIn.future(fetch_pb2.Fetch_CheckInRequest(kit_ID=self.kit_ID_, kit_location=self.kit_location_, target_location=self.target_location_))
-      self.future_.add_done_callback(self.meta_call_back)
+      self.future_.add_done_callback(self.MetaCallBack_)
 
-  def meta_call_back(self, future):
-      self.inuse_lock_.acquire()
-      self.inuse_ = False
-      self.inuse_lock_.release()
+  def MetaCallBack_(self, future):
+    """
+      This will be called after the async RPC routing finished which means this fetch
+      object is no longer in used. So if we can get the lock (There might be some one
+      wants to get this object from the pool but that function have a time.sleep(1) in
+      the loop that check the lock [it will acquire the lock check the inuse state then
+      release the lock] so no deadlock will happen. Here the acquire will block until 
+      it gets the lock)we can set it to free state and invoke the actual call back
+    """
+    self.inuse_lock_.acquire()
+    self.inuse_ = False
+    self.inuse_lock_.release()
+    if self.call_back_:
       self.call_back_()
 
   def LoadConfig(self, config: FetchConfig):
+    """
+      Simple helper for loading config object
+    """
     self.operation_ = config.operation_
     self.kit_ID_ = config.kit_ID_
     self.kit_location_ = config.kit_location_
     self.target_location_ = config.target_location_
     self.call_back_ = config.call_back_
 
-  # def CheckOutComplete(self, future):
-  #   """
-  #     Call back when the checkout process is done. 
-  #     Depending on situation it might call Kinova CheckOut function for next step
-  #   """
-  #   print("Fetch " + self.address_ + " gets back")
-  #   print("Check response value is it delivered? ", future.result().delivered)
-
-  # def CheckOut(self, kit_ID = -1, kit_location = -1, target_location = -1, call_back=None):
-  #   """
-  #     Check out instruction that will be send to the fetch
-  #   """
-  #   self.future_ = self.stub_.Fetch_CheckOut.future(fetch_pb2.Fetch_CheckOutRequest(kit_ID=kit_ID, kit_location=kit_location, target_location=target_location))
-  #   if call_back:
-  #     self.future_.add_done_callback(call_back)
-
 if __name__ == "__main__":
-  myfetch = Fetch()
-  myfetch.CheckOut()
+  # Make sure fetch_server.py is running first
+  fetch_checkout_config = FetchConfig(operation="CheckOut", kit_ID=1, kit_location=255, target_location=255)
+  fetch_checkout_config.call_back_ = lambda : print("CheckOut Success")
+  fetch = Fetch()
+  fetch.LoadConfig(fetch_checkout_config)
+  fetch()
   while True:
     pass
