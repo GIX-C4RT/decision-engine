@@ -63,5 +63,5 @@ def serve():
   server2.wait_for_termination()
 
 if __name__ == '__main__':
-    logging.basicConfig()
-    serve()
+  logging.basicConfig()
+  serve()
