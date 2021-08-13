@@ -5,6 +5,7 @@ import kinova_pb2_grpc
 import queue
 
 from kinova_class import Kinova
+import time
 
 class Kinova_pool:
   """Kinova pool Object that contains a queue of kinova ready for work
@@ -58,9 +59,6 @@ class Kinova_pool:
     """
     # We might need lock here the concurrency is relatively low 
     # so mutex won't have a big performance hit
-    kinova.inuse_lock_.acquire()
-    kinova.inuse_ = False
-    kinova.inuse_lock_.release()
     self.q_.put(kinova)
 
 if __name__ == "__main__":

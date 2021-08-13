@@ -5,6 +5,7 @@ import fetch_pb2_grpc
 import queue
 
 from fetch_class import Fetch
+import time
 
 class Fetch_pool:
   """Fetch pool Object that contains a queue of fetch ready for work
@@ -60,9 +61,6 @@ class Fetch_pool:
     """
     # We might need lock here the concurrency is relatively low 
     # so mutex won't have a big performance hit
-    fetch.inuse_lock_.acquire()
-    fetch.inuse_ = False
-    fetch.inuse_lock_.release()
     self.q_.put(fetch)
 
 if __name__ == "__main__":

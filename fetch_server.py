@@ -27,23 +27,25 @@ import random
 
 class Greeter(fetch_pb2_grpc.FetchServicer):
     def Fetch_CheckOut(self, request, context):
-        print("Navigating...")
+        print("Kit ID = ", request.kit_ID, " kit_location = ", request.kit_location, " target_location = ", request.target_location)
+        print("Kit ID = ", request.kit_ID, " Navigating...")
         time.sleep(random.randint(1,3))
-        print("Docking...")
+        print("Kit ID = ", request.kit_ID, " Docking...")
         time.sleep(random.randint(1,3))
-        print("Grasping...")
+        print("Kit ID = ", request.kit_ID, " Grasping...")
         time.sleep(random.randint(1,3))
-        print("Delivering")
+        print("Kit ID = ", request.kit_ID, " Delivering")
         time.sleep(random.randint(4,8))
-        print("Done")
+        print("Kit ID = ", request.kit_ID, " Checked Out")
         return fetch_pb2.Fetch_CheckOutReply(delivered=True)
 
     def Fetch_CheckIn(self, request, context):
-        print("retriving packing...")
+        print("Kit ID = ", request.kit_ID, " kit_location = ", request.kit_location, " target_location = ", request.target_location)
+        print("Kit ID = ", request.kit_ID, " retriving packing...")
         time.sleep(random.randint(1,3))
-        print("Docking...")
+        print("Kit ID = ", request.kit_ID, " handing over...")
         time.sleep(random.randint(1,3))
-        print("Done")
+        print("Kit ID = ", request.kit_ID, " Returned")
         return fetch_pb2.Fetch_CheckInReply(returned=True)
 
 
