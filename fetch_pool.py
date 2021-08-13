@@ -41,6 +41,8 @@ class Fetch_pool:
     """
     fetch = self.q_.get()
     # We might need lock here the concurrency is relatively low 
+    # Useing lock to prevent if robot is checked out and inuse set to true but
+    # at the same time the same robot is being returned by another request
     # so mutex won't have a big performance hit
     while True:
       fetch.inuse_lock_.acquire()
