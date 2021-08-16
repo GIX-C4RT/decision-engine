@@ -18,6 +18,8 @@ fetch_pb2_grpc.py
 fetch_pb2.py
 kinova_pb2_grpc.py
 kinova_pb2.py
+webapp_pb2_grpc.py
+webapp_pb2.py
 ```
 To execute the generation, run the following command in terminal
 ```
