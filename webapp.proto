@@ -1,0 +1,24 @@
+syntax = "proto3";
+// The Fetch service definition.
+service WebApp {
+  rpc WebApp_CheckOut (WebApp_CheckOutRequest) returns (WebApp_CheckOutReply) {}
+  rpc WebApp_CheckIn (WebApp_CheckInRequest) returns (WebApp_CheckInReply) {}
+}
+
+message WebApp_CheckOutRequest {
+  int32 user_ID = 1;
+  int32 item_ID = 2;
+}
+
+message WebApp_CheckInRequest {
+  int32 user_ID = 1;
+  int32 item_ID = 2;
+}
+
+message WebApp_CheckOutReply {
+  bool ack = 1;
+}
+
+message WebApp_CheckInReply {
+  bool ack = 1;
+}
