@@ -5,6 +5,12 @@ from kinova_class import KinovaConfig
 from fetch_class import FetchConfig
 import time
 
+import grpc
+from concurrent import futures
+
+import webapp_pb2
+import webapp_pb2_grpc
+
 class DecisionEngine:
   """ Main Decision Engine Class, Core of the system
 
@@ -94,6 +100,26 @@ class DecisionEngine:
     self.kinova_pool_.return_kinova(kinova)
 
 if __name__ == "__main__":
+  class Greeter(webapp_pb2_grpc.WebAppServicer):
+      """ Example class that defines the Fetch service
+
+          This class provides an example on how to implement gRPC server on fetch
+      """
+      def __init__(self, engine):
+        self.myengine_ = engine
+
+      def WebApp_CheckOut(self, request, context):
+        print(request.user_ID)
+        print(request.item_ID)
+        self.myengine_.op_CheckOut(fetch_checkout_config, kinova_checkout_config)
+        return webapp_pb2.WebApp_CheckOutReply(ack = True)
+        
+
+      def WebApp_CheckIn(self, request, context):
+        print(request.user_ID)
+        print(request.item_ID)
+        return webapp_pb2.WebApp_CheckInReply(ack = True)
+
   # Make sure fetch_server.py and kinova_server.py is running first
   myengine = DecisionEngine()
   myengine.init_fetch_pool(n = 2, ip_list = ['localhost:50051', 'localhost:50052'])
@@ -108,11 +134,16 @@ if __name__ == "__main__":
   fetch_checkin_config2 = FetchConfig(operation="CheckIn", kit_ID=3, kit_location=64, target_location=64)
   kinova_checkin_config2 = KinovaConfig(operation="CheckIn", kit_ID=3, item_list=[7,8,9])
 
-  myengine.op_CheckIn(fetch_checkin_config1, kinova_checkin_config1)
-  myengine.op_CheckIn(fetch_checkin_config2, kinova_checkin_config2)
-  myengine.op_CheckOut(fetch_checkout_config, kinova_checkout_config)
-  myengine.op_CheckOut(fetch_checkout_config, kinova_checkout_config)
-  myengine.op_CheckOut(fetch_checkout_config, kinova_checkout_config)
+  server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+  webapp_pb2_grpc.add_WebAppServicer_to_server(Greeter(myengine), server)
+  server.add_insecure_port('10.155.234.132:50051')
+  server.start()
+
+  # myengine.op_CheckIn(fetch_checkin_config1, kinova_checkin_config1)
+  # myengine.op_CheckIn(fetch_checkin_config2, kinova_checkin_config2)
+  # myengine.op_CheckOut(fetch_checkout_config, kinova_checkout_config)
+  # myengine.op_CheckOut(fetch_checkout_config, kinova_checkout_config)
+  # myengine.op_CheckOut(fetch_checkout_config, kinova_checkout_config)
 
   while True:
     time.sleep(1)
