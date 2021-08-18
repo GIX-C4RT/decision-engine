@@ -12,7 +12,7 @@ import time
 import random
 
 
-class Greeter(kinova_pb2_grpc.KinovaServicer):
+class Greeter(kinova_pb2_grpc.DeweyKinovaServicer):
   """ Example class that defines the Fetch service
 
       This class provides an example on how to implement gRPC server on fetch
@@ -45,12 +45,12 @@ def serve():
     Example init function for starting the service
   """
   server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-  kinova_pb2_grpc.add_KinovaServicer_to_server(Greeter(), server)
+  kinova_pb2_grpc.add_DeweyKinovaServicer_to_server(Greeter(), server)
   server.add_insecure_port('localhost:50053')
   server.start()
 
   server2 = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-  kinova_pb2_grpc.add_KinovaServicer_to_server(Greeter(), server2)
+  kinova_pb2_grpc.add_DeweyKinovaServicer_to_server(Greeter(), server2)
   server2.add_insecure_port('localhost:50054')
   server2.start()
 

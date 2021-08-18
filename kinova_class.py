@@ -43,7 +43,7 @@ class Kinova:
     self.inuse_lock_ = Lock()
     self.address_ = address
     self.channel_ = grpc.insecure_channel(self.address_)
-    self.stub_ = kinova_pb2_grpc.KinovaStub(self.channel_)
+    self.stub_ = kinova_pb2_grpc.DeweyKinovaStub(self.channel_)
     print("Initialize Kinova at " + self.address_)
 
   def __del__(self):

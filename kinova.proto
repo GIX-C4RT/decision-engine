@@ -1,6 +1,6 @@
 syntax = "proto3";
 // The Kinova service definition.
-service Kinova {
+service DeweyKinova {
   rpc Kinova_CheckOut (Kinova_CheckOutRequest) returns (Kinova_CheckOutReply) {}
   rpc Kinova_CheckIn (Kinova_CheckInRequest) returns (Kinova_CheckInReply) {}
 }

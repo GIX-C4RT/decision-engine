@@ -7,6 +7,8 @@ import time
 
 import grpc
 from concurrent import futures
+import utilities
+from fake import *
 
 import webapp_pb2
 import webapp_pb2_grpc
@@ -107,17 +109,22 @@ if __name__ == "__main__":
       """
       def __init__(self, engine):
         self.myengine_ = engine
+        self.args = utilities.parseConnectionArguments()
 
       def WebApp_CheckOut(self, request, context):
-        print(request.user_ID)
-        print(request.item_ID)
-        self.myengine_.op_CheckOut(fetch_checkout_config, kinova_checkout_config)
+        print("User ",request.user_ID, " checking out item: ", request.item_ID)
+        pre_grasp(self.args)
+        grasp(self.args)
+        gripper_close(self.args)
+        pre_grasp(self.args)
+        drop(self.args)
+        # self.myengine_.op_CheckOut(fetch_checkout_config, kinova_checkout_config)
         return webapp_pb2.WebApp_CheckOutReply(ack = True)
         
 
       def WebApp_CheckIn(self, request, context):
-        print(request.user_ID)
-        print(request.item_ID)
+        print("User ",request.user_ID, " checking in item: ", request.item_ID)
+        self.myengine_.op_CheckIn(fetch_checkin_config1, kinova_checkin_config1)
         return webapp_pb2.WebApp_CheckInReply(ack = True)
 
   # Make sure fetch_server.py and kinova_server.py is running first
