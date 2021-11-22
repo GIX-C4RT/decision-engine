@@ -10,7 +10,7 @@ import kinova_pb2_grpc
 
 import time
 import random
-
+from kinova_controller import KinovaController
 
 class Greeter(kinova_pb2_grpc.DeweyKinovaServicer):
   """ Example class that defines the Fetch service
@@ -22,9 +22,12 @@ class Greeter(kinova_pb2_grpc.DeweyKinovaServicer):
       Kinova_CheckOut call that should perform the checkout sequence.
       Can be blocking
     """
-    for item in request.item_list:
-      print("Grasping item ", item, "...")
-      time.sleep(random.randint(1,3))
+    global myk
+    print("Start full motion")
+    myk.full_motion()
+    # for item in request.item_list:
+    #   print("Grasping item ", item, "...")
+    #   time.sleep(random.randint(1,3))
     print("CheckOut Done")
     return kinova_pb2.Kinova_CheckOutReply(item_ready=True)
 
@@ -59,5 +62,6 @@ def serve():
 
 
 if __name__ == '__main__':
+  myk = KinovaController()
   logging.basicConfig()
   serve()
